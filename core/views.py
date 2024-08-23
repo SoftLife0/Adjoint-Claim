@@ -4,4 +4,7 @@ from flask import request
 from flask import request
 
 def home(request):
-    return render(request, 'home.html')
+    return render(request, 'index.html')
+
+def search(request):
+    return render(request, 'search.html')
