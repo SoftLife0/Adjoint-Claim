@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block body %}
+    <h1>Upload Courses CSV</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Upload</button>
+    </form>
+{% endblock %}
