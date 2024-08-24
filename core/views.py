@@ -19,7 +19,7 @@ def upload_courses(request):
             csv_file = request.FILES['file']
             if not csv_file.name.endswith('.csv'):
                 messages.error(request, 'This is not a CSV file')
-                return redirect('upload_courses')
+                return redirect('upload-courses')
             
             file_data = TextIOWrapper(csv_file, encoding='utf-8')
             reader = csv.DictReader(file_data)
@@ -52,7 +52,7 @@ def upload_courses(request):
                 )
 
             messages.success(request, 'CSV file has been processed successfully')
-            return redirect('upload_courses')
+            return redirect('upload-courses')
     else:
         form = CSVUploadForm()
 
@@ -64,8 +64,14 @@ def create_course(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Course created successfully')
-            return redirect('home')
+            return redirect('create-course')
     else:
         form = CourseAllocationForm()
 
     return render(request, 'create_course.html', {'form': form})
+
+
+def allcourses(request):
+    courses = CourseAllocation.objects.all()
+    course_count = courses.count()
+    return render(request, 'allcourses.html', {'courses': courses, 'course_count':course_count})

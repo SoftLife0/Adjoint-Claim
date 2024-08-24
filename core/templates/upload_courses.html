@@ -1,6 +1,18 @@
 {% extends "layout.html" %}
 {% load static %}
 {% block body %}
+
+    {% if messages %}
+        <div>
+            {% for message in messages %}
+                <div class="alert {{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+
     <h1>Upload Courses CSV</h1>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}

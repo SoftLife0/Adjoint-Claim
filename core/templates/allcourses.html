@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block body %}
+<div class="row col-12 p-1">
+    <div class="card pt-1 mx-3">
+        <div class="card-header ">
+            <h5><strong>Total Course Allocation : {{ course_count }}</strong></h5>
+
+            
+        </div>
+        <div class="card-body">
+            {% if courses %}
+                <table class="table table-hover">
+                    <thead class="">
+                        <tr>
+                            <th>Course Code</th>
+                            <th>Course Title </th>
+                            <th>Lecturer</th>
+                            <th>Department</th>
+                            <th class="text-end">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for course in courses %}
+                            <tr>
+                                {% comment %} <tr class="clickable-row" onclick="window.location='{% url 'staff-details' staff.staffno %}'"> {% endcomment %}
+                                <td>{{ course.course_code }}</td>
+                                <td>{{ course.course_title }}</td>
+                                <td>{{ course.lecturer_title }} {{ course.lecturer }}</td>
+                                <td>{{ course.department }}</td>
+                                <td class="text-end">
+                                    {% comment %} <a class="btn btn-sm btn-info bi-pencil-square" href="{% url 'edit-directorate' dict.id %}"></a> {% endcomment %}
+                                    <a class="btn btn-sm btn-info bi-pencil-square"></a>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="5" class="text-center">No Course found.</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p class="text-center">No Course found.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
