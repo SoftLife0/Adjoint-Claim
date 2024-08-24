@@ -12,6 +12,10 @@ def home(request):
 def search(request):
     return render(request, 'search.html')
 
+def claim(request):
+    rows = range(1, 15)
+    return render(request, 'claim.html', {'rows': rows})
+
 def upload_courses(request):
     if request.method == 'POST':
         form = CSVUploadForm(request.POST, request.FILES)

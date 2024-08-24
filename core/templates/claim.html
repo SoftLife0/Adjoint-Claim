@@ -1,0 +1,77 @@
+{% load static %}
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claim Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container my-5 col-md-8">
+        <div class=" text-center">
+            <img src="{% static 'img/fav.png' %}" width="100"> 
+            <h4 class="mb-3">CENTRAL UNIVERSITY</h4>
+            <h6 style="color: black; text-decoration: underline;">CLAIM FORM FOR INTERNAL FACULTY</h6>
+        </div>
+        <form method="POST" action="">
+            {% csrf_token %}
+    
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="lecturerName" class="col-form-label">Name of Lecturer:</label>
+                    <input type="text" id="lecturerName" class="form-control" placeholder="Enter lecturer's name">
+                </div>
+                <div class="col-md-6">
+                    <label for="course" class="col-form-label">Course:</label>
+                    <input type="text" id="course" class="form-control" placeholder="Enter course name">
+                </div>
+            </div>
+        
+            <!-- Second Row: Academic Year, Semester, and Month -->
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <label for="academicYear" class="col-form-label">Academic Year:</label>
+                    <input type="text" id="academicYear" class="form-control" placeholder="Enter academic year">
+                </div>
+                <div class="col-md-4">
+                    <label for="semester" class="col-form-label">Semester:</label>
+                    <input type="text" id="semester" class="form-control" placeholder="Enter semester">
+                </div>
+                <div class="col-md-4">
+                    <label for="month" class="col-form-label">Month:</label>
+                    <input type="text" id="month" class="form-control" placeholder="Enter month">
+                </div>
+            </div>
+            <br>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>DATE</th>
+                        <th>CLASS/COURSE(S)</th>
+                        <th>NO. OF HOURS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Loop through the 'rows' passed from the view -->
+                    {% for i in rows %}
+                    <tr>
+                        <td><input type="date" class="form-control" name="date{{ i }}"></td>
+                        <td><input type="text" class="form-control" name="course{{ i }}"></td>
+                        <td><input type="time" class="form-control" name="hours{{ i }}" placeholder="Enter hours"></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </form>
+    </div>
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+
+{% endblock %}
