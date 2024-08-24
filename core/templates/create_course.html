@@ -1,20 +1,36 @@
 {% extends "layout.html" %}
 {% load static %}
 {% block body %}
-<div class="row">
-    <div class="col-lg-8 col-md-6 pt-2">
-        <div class="card bg-white">
-            <div class="card-header text-center">
-                <h5><strong>create New Course</strong></h5>
+<div class=" mt-4">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="card-header text-center mb-3">
+                <h5 class="text-primary"><strong>Create New Course</strong></h5>
             </div>
-            <div class="card-body">
                 <form method="POST" action="">
                     {% csrf_token %}
-                    {{ form.as_p }} 
-
-                    <button type="submit" class="btn btn-primary">Create Course</button>
-                </form>
-            </div>
+                    
+                    <div class="row g-3 mb-3">
+                        {% for field in form %}
+                            <div class="col-md-4">
+                                <div class="mb-2">
+                                    <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                                    {{ field }}
+                                    <!-- Display validation errors if any -->
+                                    {% if field.errors %}
+                                        <div class="text-danger">
+                                            {{ field.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="d-flex justify-content-end mt-4">
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </div>
+                </form>                
         </div>
     </div>
 
