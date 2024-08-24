@@ -1,16 +1,22 @@
 {% extends "layout.html" %}
 {% load static %}
 {% block body %}
-<div class="container">
-    <h2>Create Course</h2>
+<div class="row">
+    <div class="col-lg-8 col-md-6 pt-2">
+        <div class="card bg-white">
+            <div class="card-header text-center">
+                <h5><strong>create New Course</strong></h5>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    {{ form.as_p }} 
 
-    <!-- Form -->
-    <form method="POST" action="">
-        {% csrf_token %}
-        {{ form.as_p }} 
-
-        <button type="submit" class="btn btn-primary">Create Course</button>
-    </form>
+                    <button type="submit" class="btn btn-primary">Create Course</button>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <!-- Toast for success or error messages -->
     {% if messages %}

@@ -75,3 +75,18 @@ def allcourses(request):
     courses = CourseAllocation.objects.all()
     course_count = courses.count()
     return render(request, 'allcourses.html', {'courses': courses, 'course_count':course_count})
+
+
+def edit_course(request, course_code):
+    courses = CourseAllocation.objects.all()
+    course = CourseAllocation.objects.get(id=course_code)
+    if request.method == 'POST':
+        form = CourseAllocationForm(request.POST, instance=course)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Course updated successfully')
+            return redirect('allcourses')
+    else:
+        form = CourseAllocationForm(instance=course)
+
+    return render(request, 'create_course.html', {'form': form, 'courses':courses})
