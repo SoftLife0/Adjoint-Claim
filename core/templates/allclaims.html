@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block body %}
+<div class="container">
+    <h5 class="mb-3 text-primary"><strong>All Adjunct Claim</strong></h5>
+    
+    <div class="container mt-5">
+        <div class="row">
+            {% for claim in claims %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ claim.lecturer_name }}</h5>
+                        <p class="card-text"><strong>Course:</strong> {{ claim.course }}</p>
+                        <p class="card-text"><strong>Academic Year:</strong> {{ claim.academic_year }}</p>
+                        <a href="{% url 'claim-details' claim.pk %}" class="btn btn-primary">View</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -11,6 +11,8 @@ urlpatterns = [
     path('allcourses/', views.allcourses, name='allcourses'),
     path('edit_course/<str:course_code>', views.edit_course, name='edit-course'),
     path('claim', views.claim, name='claim'),
+    path('allclaims', views.allclaims, name='allclaims'),
+    path('claim_details/<int:pk>/', views.claim_details, name='claim-details'),
     path('success', views.success, name='success'),
 
 ]

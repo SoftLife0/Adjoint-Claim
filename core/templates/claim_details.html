@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block body %}
+<div class="container">
+    <h2>Claim Details</h2>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title"><strong>Lecturer:</strong> {{ claim.lecturer_name }}</h5>
+            <p class="card-text"><strong>Course:</strong> {{ claim.course }}</p>
+            <p class="card-text"><strong>Academic Year:</strong> {{ claim.academic_year }}</p>
+            <p class="card-text"><strong>Semester:</strong> {{ claim.semester }}</p>
+            <p class="card-text"><strong>Month:</strong> {{ claim.month }}</p>
+            <h6>Sessions:</h6>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>DATE</th>
+                        <th>CLASS/COURSE</th>
+                        <th>NO. OF HOURS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for session in claim.sessions.all %}
+                    <tr>
+                        <td>{{ session.date }}</td>
+                        <td>{{ session.course_taught }}</td>
+                        <td>{{ session.time_range }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3">No sessions available.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="{% url 'allclaims' %}" class="btn btn-secondary">Back to Claims</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

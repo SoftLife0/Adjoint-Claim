@@ -64,6 +64,17 @@ def claim(request):
         'rows': rows,
     })
 
+
+def allclaims(request):
+    claims = Claim.objects.all()
+    claim_count = claims.count()
+    return render(request, 'allclaims.html', {'claims': claims, 'claim_count':claim_count})
+
+def claim_details(request, pk):
+    claim = Claim.objects.get(id=pk)
+    sessions = ClaimSession.objects.filter(claim=claim)
+    return render(request, 'claim_details.html', {'claim': claim, 'sessions': sessions})
+
 def upload_courses(request):
     if request.method == 'POST':
         form = CSVUploadForm(request.POST, request.FILES)
