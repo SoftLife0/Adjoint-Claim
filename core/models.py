@@ -16,3 +16,23 @@ class CourseAllocation(models.Model):
 
     def __str__(self):
         return f"{self.course_title} ({self.course_code})"
+    
+
+class Claim(models.Model):
+    lecturer_name = models.CharField(max_length=100)
+    course = models.CharField(max_length=100)
+    academic_year = models.CharField(max_length=20)
+    semester = models.CharField(max_length=20)
+    month = models.CharField(max_length=20)
+
+    def __str__(self):
+        return f"{self.lecturer_name} - {self.course}"
+
+class ClaimSession(models.Model):
+    claim = models.ForeignKey(Claim, related_name='sessions', on_delete=models.CASCADE)
+    date = models.DateField()
+    course_taught = models.CharField(max_length=100)
+    time_range = models.CharField(max_length=50)
+
+    def __str__(self):
+        return f"Session on {self.date} - {self.course_taught}"

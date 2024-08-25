@@ -16,4 +16,23 @@ class CourseAllocationForm(forms.ModelForm):
 class CSVUploadForm(forms.Form):
     file = forms.FileField()
         
+
+class ClaimForm(forms.ModelForm):
+    class Meta:
+        model = Claim
+        fields = ['lecturer_name', 'course', 'academic_year', 'semester', 'month']
         
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for fields in self.fields:
+            self.fields[fields].widget.attrs['class'] = 'form-control'
+
+class ClaimSessionForm(forms.ModelForm):
+    class Meta:
+        model = ClaimSession
+        fields = ['date', 'course_taught', 'time_range']
+        
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for fields in self.fields:
+            self.fields[fields].widget.attrs['class'] = 'form-control'
