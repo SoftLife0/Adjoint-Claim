@@ -6,14 +6,19 @@ from io import TextIOWrapper
 from .forms import *
 from .models import *
 
-def home(request):
+def index(request):
     return render(request, 'index.html')
+
+def home(request):
+    return render(request, 'home.html')
 
 def search(request):
     return render(request, 'search.html')
 
 def success(request):
-    return render(request, 'success.html')
+    lecturer_name = request.session.get('lecturer_name', 'Lecturer')
+    message = f"Thank you, {lecturer_name}, for submitting your claim."
+    return render(request, 'success.html', {'message': message})
 
 def claim(request):
     rows = range(1, 15) 
@@ -46,7 +51,8 @@ def claim(request):
                     time_range=session['time_range']
                 )
 
-            return redirect('success')  # Redirect after successful save
+            request.session['lecturer_name'] = claim.lecturer_name
+            return redirect('success')
 
     else:
         # If GET request, render the empty form
@@ -54,7 +60,7 @@ def claim(request):
 
     return render(request, 'claim.html', {
         'claim_form': claim_form,
-        'rows': rows
+        'rows': rows,
     })
 
 def upload_courses(request):
