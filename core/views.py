@@ -17,7 +17,8 @@ def search(request):
 
 def success(request):
     lecturer_name = request.session.get('lecturer_name', 'Lecturer')
-    message = f"Thank you, {lecturer_name}, for submitting your claim."
+    course = request.session.get('course', 'None')
+    message = f"Thank you {lecturer_name}, for submitting your Adjunct claim for {course}."
     return render(request, 'success.html', {'message': message})
 
 def claim(request):
@@ -52,10 +53,10 @@ def claim(request):
                 )
 
             request.session['lecturer_name'] = claim.lecturer_name
+            request.session['course'] = claim.course
             return redirect('success')
 
     else:
-        # If GET request, render the empty form
         claim_form = ClaimForm()
 
     return render(request, 'claim.html', {
