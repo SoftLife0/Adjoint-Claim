@@ -6,10 +6,10 @@
         width: 20%;
     }
     .col-course {
-        width: 50%;
+        width: 60%;
     }
     .col-hours {
-        width: 30%;
+        width: 20%;
     }
 </style>
 
@@ -20,7 +20,7 @@
         <h4 class="mb-3">CENTRAL UNIVERSITY</h4>
         <h6 style="color: black; text-decoration: underline;">CLAIM FORM FOR INTERNAL FACULTY</h6>
     </div>
-    <form method="POST">
+    <form method="POST" action="">
         {% csrf_token %}
         
         <!-- Main Form Fields -->
@@ -37,7 +37,7 @@
     
         <div class="row mb-3">
             <div class="col-4">
-                <label for="academicYear" class="col-form-label">Academic Year:</label>
+                <label for="academicYear" class="col-form-label">Year:</label>
                 {{ claim_form.academic_year }}
             </div>
             <div class="col-4">
@@ -50,33 +50,45 @@
             </div>
         </div>
     
-        <!-- Dynamic Table Rows for Sessions -->
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th class="col-date">DATE</th>
-                    <th class="col-course">CLASS/COURSE(S)</th>
-                    <th class="col-hours">NO. OF HOURS</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for i in rows %}
-                <tr>
-                    <td><input type="date" class="form-control" name="date{{ i }}"></td>
-                    <td><input type="text" class="form-control" name="course{{ i }}"></td>
-                    <td><input type="text" class="form-control" name="time_range{{ i }}" placeholder="5:00 - 7:00"></td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    
+        
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th class="col-date">DATE</th>
+                        <th class="col-course">CLASS/COURSE(S)</th>
+                        <th class="col-hours"> HOURS</th>
+                    </tr>
+                </thead>
+                <tbody id="sessionRows">
+                    {% for i in rows %}
+                    <tr>
+                        <td>
+                            <input type="date" class="form-control" name="date{{ i }}" placeholder="Select Date">
+                        </td>
+                        <td>
+                            <textarea type="text" class="form-control" name="course{{ i }}" placeholder="Course Name" style="width: 100%;"></textarea>
+                        </td>
+                        <td>
+                            <div class="time-inputs">
+                                <input type="time" name="start_time{{ i }}" placeholder="Start Time">
+                                <input type="time" name="end_time{{ i }}" placeholder="End Time">
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
         <div class="mb-3">
-            <input type="checkbox" id="acceptTerms" required>
-            <label for="acceptTerms" class="form-check-label">I accept the <a href="/terms" target="_blank">Terms and Conditions</a></label>
+            <input type="hidden" name="total_rows" id="totalRows" value="10">
+            <button type="button" id="addRowBtn" class="btn btn-primary">
+                <i class="bi bi-plus-circle-fill"></i>
+            </button>
         </div>
+        
 
         <div class="col-md-6">
-            <button type="submit" class="pill-button" id="submitButton" disabled>File a Claim</button>
+            <button type="submit" class="pill-button">File a Claim</button>
         </div>
 
     </form>
@@ -86,11 +98,27 @@
     
 
 <script>
-    const checkbox = document.getElementById('acceptTerms');
-    const submitButton = document.getElementById('submitButton');
+    let rowCounter = 10;
+    const sessionRows = document.getElementById('sessionRows');
+    const addRowBtn = document.getElementById('addRowBtn');
+    const totalRows = document.getElementById('totalRows');
 
-    checkbox.addEventListener('change', () => {
-        submitButton.disabled = !checkbox.checked;
+    addRowBtn.addEventListener('click', () => {
+        rowCounter++;
+        const newRow = `
+            <tr>
+                <td><input type="date" class="form-control" name="date${rowCounter}"></td>
+                <td><textarea type="text" class="form-control" name="course${rowCounter}"></textarea></td>
+                <td>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="time" class="form-control" name="start_time${rowCounter}">
+                        <input type="time" class="form-control" name="end_time${rowCounter}">
+                    </div>
+                </td>
+            </tr>
+        `;
+        sessionRows.insertAdjacentHTML('beforeend', newRow);
+        totalRows.value = rowCounter;  // Update hidden input to reflect total rows
     });
 </script>
 

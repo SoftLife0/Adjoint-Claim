@@ -22,34 +22,36 @@ def success(request):
     return render(request, 'success.html', {'message': message})
 
 def claim(request):
-    rows = range(1, 15) 
+    rows = range(1, 11) 
 
     if request.method == 'POST':
         claim_form = ClaimForm(request.POST)
         session_data = []
 
-        # Gather session data from the form
-        for i in rows:
+        total_rows = int(request.POST.get('total_rows', 10))
+        for i in range(1, total_rows + 1):
             date = request.POST.get(f'date{i}')
             course_taught = request.POST.get(f'course{i}')
-            time_range = request.POST.get(f'time_range{i}')
-            if date and course_taught and time_range:
+            start_time = request.POST.get(f'start_time{i}')
+            end_time = request.POST.get(f'end_time{i}')
+            if date and course_taught and start_time and end_time:
                 session_data.append({
                     'date': date,
                     'course_taught': course_taught,
-                    'time_range': time_range
+                    'start_time': start_time,
+                    'end_time': end_time,
                 })
 
         if claim_form.is_valid() and session_data:
             claim = claim_form.save()
 
-            # Save session data
             for session in session_data:
                 ClaimSession.objects.create(
                     claim=claim,
                     date=session['date'],
                     course_taught=session['course_taught'],
-                    time_range=session['time_range']
+                    start_time=session['start_time'],
+                    end_time=session['end_time'],
                 )
 
             request.session['lecturer_name'] = claim.lecturer_name
@@ -63,7 +65,6 @@ def claim(request):
         'claim_form': claim_form,
         'rows': rows,
     })
-
 
 def allclaims(request):
     claims = Claim.objects.all()

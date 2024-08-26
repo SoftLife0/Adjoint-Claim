@@ -32,7 +32,8 @@ class ClaimSession(models.Model):
     claim = models.ForeignKey(Claim, related_name='sessions', on_delete=models.CASCADE)
     date = models.DateField()
     course_taught = models.CharField(max_length=100)
-    time_range = models.CharField(max_length=50)
+    start_time = models.CharField(max_length=50, default="00:00")
+    end_time = models.CharField(max_length=50, default="00:00")
 
     def __str__(self):
-        return f"Session on {self.date} - {self.course_taught}"
+        return f"Session on {self.date} - {self.course_taught} - {self.start_time} - {self.end_time}"

@@ -36,19 +36,6 @@
             line-height: 200px;
             margin-left: -15px;
         }
-
-        .pill-button {
-            background-color: #992621;
-            border: none;
-            color: white;
-            border-radius:10px ;
-            padding: 16px 22px;
-            box-shadow: 0 2px 8px 0 rgba(48, 44, 255, 0.1);
-            text-align: center;
-            font-weight: bold;
-            transition: width 2s;
-            width: 50%;
-        }
         
     </style>
     
@@ -60,7 +47,7 @@
         <p>{{ message }}</p>
         <br/>
         <a href="{% url 'home' %}">
-            <button class="pill-button">Go Back Home</button>
+            <button class="pill-button" width="50%">Go Back Home</button>
         </a>
     </div>
 

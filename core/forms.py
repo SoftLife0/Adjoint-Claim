@@ -30,7 +30,7 @@ class ClaimForm(forms.ModelForm):
 class ClaimSessionForm(forms.ModelForm):
     class Meta:
         model = ClaimSession
-        fields = ['date', 'course_taught', 'time_range']
+        fields = ['date', 'course_taught', 'start_time', 'end_time']
         
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
