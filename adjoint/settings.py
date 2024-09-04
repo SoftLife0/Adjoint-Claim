@@ -27,13 +27,14 @@ SECRET_KEY = 'django-insecure-)+hrhm71q^2afx7s=%!wt+t$4v^y@=z-5wtk9$1s$a+#rl-g=9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '172.20.10.2', '192.168.8.186']
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
 
 INSTALLED_APPS = [
     'core.apps.CoreConfig',
+    'srp.apps.SrpConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -77,17 +78,13 @@ WSGI_APPLICATION = 'adjoint.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'adjoint',
-        'USER': 'postgres',
-        'PASSWORD': 'nimda@2021',
-        'HOST': '45.222.128.210',
-        'PORT': '5432',
+        'NAME': os.environ.get('ADJUNCT_DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': os.environ.get('DB_PORT'),
     }
 }
 

@@ -1,0 +1,38 @@
+{% extends "user.html" %}
+{% load static %}
+
+{% block body %}
+
+<div class="">
+    <div class="row" style="justify-content: space-around; margin-top: 4vh; min-height: 80vh;">
+        <div class="col-md-6">
+            <img src="{% static 'img/student.jpeg' %}" width="100%">
+        </div>
+
+        <div class="col-md-6" style="align-items: center;">
+            <div class="">
+                <h6 class="heading" style="margin-top: 1vh;">central.edu.gh</h6> 
+                <h2 class="heading" style="margin-top: 1vh;"><b>Login to your dashboard</b></h2> 
+                
+                <br/>
+                <form method="POST" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="username">Email Address</label>
+                        <input type="text" class="form-control" name="username" id="username" placeholder="john">
+                        <small id="emailHelpId" class="form-text text-muted">Help text</small>
+                    </div>
+                    <br>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" name="password" id="password" placeholder="*************">
+                    </div>
+
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
