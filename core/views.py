@@ -5,6 +5,8 @@ import csv
 from io import TextIOWrapper
 from .forms import *
 from .models import *
+from .utils import fetch_course_allocation
+
 
 def index(request):
     return render(request, 'index.html')
@@ -20,6 +22,19 @@ def success(request):
     course = request.session.get('course', 'None')
     message = f"Thank you {lecturer_name}, for submitting your Adjunct claim for {course}."
     return render(request, 'success.html', {'message': message})
+
+
+    
+def get_course_by_lecturer(request):
+    lecturer_name = request.GET.get('lecturer_name')
+    course_code = fetch_course_allocation(lecturer_name)
+    
+    if course_code:
+        data = {'course': course_code}
+        return JsonResponse(data)
+    else:
+        return JsonResponse({'error': 'No course found for this lecturer'}, status=404)
+    
 
 def claim(request):
     rows = range(1, 11) 

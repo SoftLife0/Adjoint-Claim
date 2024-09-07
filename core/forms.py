@@ -18,6 +18,8 @@ class CSVUploadForm(forms.Form):
         
 
 class ClaimForm(forms.ModelForm):
+    lecturer_name = forms.CharField(widget=forms.TextInput(attrs={'id': 'lecturer-name-autocomplete'}))
+
     class Meta:
         model = Claim
         fields = ['lecturer_name', 'course', 'academic_year', 'semester', 'month']

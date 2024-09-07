@@ -55,7 +55,7 @@
                 <thead>
                     <tr>
                         <th class="col-date">DATE</th>
-                        <th class="col-course">CLASS/COURSE(S)</th>
+                        <th class="col-course">TOPICS</th>
                         <th class="col-hours"> HOURS</th>
                     </tr>
                 </thead>
@@ -119,6 +119,29 @@
         `;
         sessionRows.insertAdjacentHTML('beforeend', newRow);
         totalRows.value = rowCounter;  // Update hidden input to reflect total rows
+    });
+</script>
+
+script>
+    $(document).ready(function() {
+        $('#lecturer-name-autocomplete').on('input', function() {
+            var lecturerName = $(this).val();
+            
+            if (lecturerName.length > 2) {  // Start fetching after typing 3 characters
+                $.ajax({
+                    url: "{% url 'get_course_by_lecturer' %}",  // Ensure this URL is correct
+                    data: {'lecturer_name': lecturerName},
+                    success: function(data) {
+                        if (data.course) {
+                            $('#id_course').val(data.course);  // Auto-fill the course field
+                        }
+                    },
+                    error: function() {
+                        console.log('Error fetching course data');
+                    }
+                });
+            }
+        });
     });
 </script>
 
